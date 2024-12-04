@@ -19,13 +19,15 @@ public class Day2Part1 {
             increasing = temp[0] < temp[1];
             for (int j = 0; j < temp.length - 1; j++)
             {
-                if (!increasing && temp[j] < temp[j + 1] || Math.abs(temp[j] - temp[j + 1]) > 3)
+                if (increasing && temp[j] >= temp[j + 1] || Math.abs(temp[j] - temp[j + 1]) > 3 )
                 {
                     works = false;
+                    break;
                 }
-                else if (increasing && temp[j] > temp[j + 1] || Math.abs(temp[j] - temp[j + 1]) > 3)
+                else if (!increasing && temp[j] <= temp[j + 1] || Math.abs(temp[j] - temp[j + 1]) > 3 )
                 {
                     works = false;
+                    break;
                 }
             }
             if (works)
