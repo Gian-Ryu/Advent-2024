@@ -29,20 +29,44 @@ public class Day2Part2 {
                     failed.add(j + 1);
                 }
             }
-            if (failed.size() <= 2 && failed.size() != 0 && Math.abs(failed.get(0) - failed.get(1)) == 1)
+            if (failed.size() <= 2 && !failed.isEmpty())
             {
-                ArrayList<Integer> tempTemp = temp;
-                tempTemp.remove(failed.get(0));
-                increasing = temp.get(0) < temp.get(1);
+                ArrayList<Integer> tempTemp = new ArrayList<>(temp);
+                boolean first = true;
+                int rem = failed.getFirst() - 1;
+                tempTemp.remove(rem);
+                increasing = tempTemp.get(0) < tempTemp.get(1);
                 for (int k = 0; k < tempTemp.size() - 1; k++)
                 {
-                    if (increasing && temp.get(k) >= temp.get(k + 1) || Math.abs(temp.get(k) - temp.get(k + 1)) > 3)
+                    if (increasing && tempTemp.get(k) >= tempTemp.get(k + 1) || Math.abs(tempTemp.get(k) - tempTemp.get(k + 1)) > 3)
                     {
-                        works = false;
+                        first = false;
+                        break;
                     }
-                    else if (!increasing && temp.get(k) <= temp.get(k + 1) || Math.abs(temp.get(k) - temp.get(k + 1)) > 3)
+                    else if (!increasing && tempTemp.get(k) <= tempTemp.get(k + 1) || Math.abs(tempTemp.get(k) - tempTemp.get(k + 1)) > 3)
                     {
-                        works = false;
+                        first = false;
+                        break;
+                    }
+                }
+                if (!first)
+                {
+                    ArrayList<Integer> tempTemp2 = new ArrayList<>(temp);
+                    rem = failed.getFirst();
+                    tempTemp2.remove(rem);
+                    increasing = tempTemp2.get(0) < tempTemp2.get(1);
+                    for (int k = 0; k < tempTemp2.size() - 1; k++)
+                    {
+                        if (increasing && tempTemp2.get(k) >= tempTemp2.get(k + 1) || Math.abs(tempTemp2.get(k) - tempTemp2.get(k + 1)) > 3)
+                        {
+                            works = false;
+                            break;
+                        }
+                        else if (!increasing && tempTemp2.get(k) <= tempTemp2.get(k + 1) || Math.abs(tempTemp2.get(k) - tempTemp2.get(k + 1)) > 3)
+                        {
+                            works = false;
+                            break;
+                        }
                     }
                 }
             }
@@ -55,7 +79,7 @@ public class Day2Part2 {
                 ans++;
             }
         }
-        System.out.print(ans);
+        System.out.println(ans);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
