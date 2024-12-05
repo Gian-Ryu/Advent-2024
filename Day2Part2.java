@@ -23,30 +23,26 @@ public class Day2Part2 {
                 if (increasing && temp.get(j) >= temp.get(j + 1) || Math.abs(temp.get(j) - temp.get(j + 1)) > 3)
                 {
                     failed.add(j + 1);
-                    System.out.print(failed.size() == 0);
-                    break;
                 }
                 else if (!increasing && temp.get(j) <= temp.get(j + 1) || Math.abs(temp.get(j) - temp.get(j + 1)) > 3)
                 {
                     failed.add(j + 1);
-                    break;
                 }
             }
-            if (failed.size() == 2 && Math.abs(failed.get(0) - failed.get(1)) == 1)
+            if (failed.size() <= 2 && failed.size() != 0 && Math.abs(failed.get(0) - failed.get(1)) == 1)
             {
                 ArrayList<Integer> tempTemp = temp;
                 tempTemp.remove(failed.get(0));
+                increasing = temp.get(0) < temp.get(1);
                 for (int k = 0; k < tempTemp.size() - 1; k++)
                 {
                     if (increasing && temp.get(k) >= temp.get(k + 1) || Math.abs(temp.get(k) - temp.get(k + 1)) > 3)
                     {
                         works = false;
-                        break;
                     }
                     else if (!increasing && temp.get(k) <= temp.get(k + 1) || Math.abs(temp.get(k) - temp.get(k + 1)) > 3)
                     {
                         works = false;
-                        break;
                     }
                 }
             }
