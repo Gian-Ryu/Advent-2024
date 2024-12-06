@@ -10,8 +10,8 @@ public class Day2Part2 {
         int ans = 0;
         for (String e : fileData)
         {
-            boolean works = true;
-            ArrayList<Integer> failed = new ArrayList<>();
+            boolean works = true; //to check if the given input works
+            ArrayList<Integer> failed = new ArrayList<>(); //an array of all the indexes of fails.
             ArrayList<Integer> temp = new ArrayList<>();
             boolean increasing;
             for (int i = 0; i < e.split(" ").length; i++) {
@@ -29,12 +29,15 @@ public class Day2Part2 {
                     failed.add(j + 1);
                 }
             }
-            if (failed.size() <= 2 && !failed.isEmpty())
+            if (!failed.isEmpty())
             {
                 ArrayList<Integer> tempTemp = new ArrayList<>(temp);
+                System.out.print(failed + " | ");
+                System.out.print(tempTemp + " | ");
                 boolean first = true;
                 int rem = failed.getFirst() - 1;
                 tempTemp.remove(rem);
+                System.out.print(tempTemp + " | ");
                 increasing = tempTemp.get(0) < tempTemp.get(1);
                 for (int k = 0; k < tempTemp.size() - 1; k++)
                 {
@@ -49,11 +52,14 @@ public class Day2Part2 {
                         break;
                     }
                 }
+                System.out.print(first + " || ");
                 if (!first)
                 {
                     ArrayList<Integer> tempTemp2 = new ArrayList<>(temp);
+                    System.out.print(tempTemp2 + " | ");
                     rem = failed.getFirst();
                     tempTemp2.remove(rem);
+                    System.out.print(tempTemp2 + " | ");
                     increasing = tempTemp2.get(0) < tempTemp2.get(1);
                     for (int k = 0; k < tempTemp2.size() - 1; k++)
                     {
@@ -68,11 +74,9 @@ public class Day2Part2 {
                             break;
                         }
                     }
+                    System.out.print(works + " || ");
                 }
-            }
-            else if (failed.size() > 2)
-            {
-                works = false;
+                System.out.println("done");
             }
             if (works)
             {
