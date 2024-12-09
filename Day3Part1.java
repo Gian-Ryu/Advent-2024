@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class Main {
+public class Day3Part1 {
     public static void main(String[] args) {
 
         ArrayList<String> fileData = getFileData("src/Day3Input.txt");
