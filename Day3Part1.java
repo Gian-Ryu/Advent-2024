@@ -12,17 +12,26 @@ public class Day3Part1 {
         ArrayList<String> fileData = getFileData("src/Day3Input.txt");
         System.out.println(fileData);
         int ans = 0;
+        boolean on = true;
         for (String e : fileData)
         {
-            ArrayList<String> allMatches = new ArrayList<String>();
-            String regex = "mul\\([1-9][0-9],[1-9][0-9]\\)";
-            Matcher m = Pattern.compile(regex).matcher(e);
-            while (m.find()) {
-                allMatches.add(m.group());
+            String find = "do\\(\\) | don't\\(\\) | mul\\([1-9][0-9]*,[1-9][0-9]*\\)";
+            Matcher n = Pattern.compile(find).matcher(e);
+            while(n.find())
+            {
+                if (n.group().charAt(0) == 'd') {
+                    on = n.group().charAt(2) != 'n';
+                }
+                else if (on)
+                {
+                    int[] ints = new int[2];
+                    ints[0] = Integer.parseInt(n.group().split(",")[0].substring(4));
+                    ints[1] = Integer.parseInt(n.group().split(",")[1].substring(0, n.group().split(",")[1].length() - 1));
+                    ans += ints[0] * ints[1];
+                }
             }
-            System.out.println(allMatches);
-            //ans +=
         }
+        System.out.println(ans);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
