@@ -15,20 +15,11 @@ public class Day3Part1 {
         boolean on = true;
         for (String e : fileData)
         {
-            String find = "do\\(\\) | don't\\(\\) | mul\\([1-9][0-9]*,[1-9][0-9]*\\)";
+            String find = "mul\\([1-9][0-9]*,[1-9][0-9]*\\)";
             Matcher n = Pattern.compile(find).matcher(e);
             while(n.find())
             {
-                if (n.group().charAt(0) == 'd') {
-                    on = n.group().charAt(2) != 'n';
-                }
-                else if (on)
-                {
-                    int[] ints = new int[2];
-                    ints[0] = Integer.parseInt(n.group().split(",")[0].substring(4));
-                    ints[1] = Integer.parseInt(n.group().split(",")[1].substring(0, n.group().split(",")[1].length() - 1));
-                    ans += ints[0] * ints[1];
-                }
+                ans += Integer.parseInt(n.group().split(",")[0].substring(4)) * Integer.parseInt(n.group().split(",")[1].substring(0, n.group().split(",")[1].length() - 1));
             }
         }
         System.out.println(ans);
