@@ -15,7 +15,7 @@ public class Day3Part2 {
         boolean on = true;
         for (String e : fileData)
         {
-            String find = "do\\(\\) | don't\\(\\) | mul\\([1-9][0-9]*,[1-9][0-9]*\\)";
+            String find = "do\\(\\)|don't\\(\\)|mul\\([1-9][0-9]*,[1-9][0-9]*\\)";
             Matcher n = Pattern.compile(find).matcher(e);
             while(n.find())
             {
