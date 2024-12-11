@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,31 +15,10 @@ public class Day4Part1 {
             {
                 if (fileData.get(i).charAt(j) == 'X')
                 {
-                    System.out.println("[" + i + ", " + j + "]");
-                    if (i > 2)
+                    int[][] ways = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
+                    for (int k = 0; k < ways.length; k++)
                     {
-                        if (foundXMAS(fileData, "up", i, j))
-                        {
-                            ans++;
-                        }
-                    }
-                    if (i < fileData.size() - 2)
-                    {
-                        if (foundXMAS(fileData, "down", i, j))
-                        {
-                            ans++;
-                        }
-                    }
-                    if (j > 2)
-                    {
-                        if (foundXMAS(fileData, "left", i, j))
-                        {
-                            ans++;
-                        }
-                    }
-                    if (j < fileData.get(i).length() - 2)
-                    {
-                        if (foundXMAS(fileData, "right", i, j))
+                        if (foundXMAS(fileData, i, j, ways[k][0], ways[k][1]))
                         {
                             ans++;
                         }
@@ -51,25 +29,24 @@ public class Day4Part1 {
         System.out.println(ans);
     }
 
-    public static boolean foundXMAS(ArrayList<String> arr, String dir, int row, int col)
+    public static boolean foundXMAS(ArrayList<String> arr, int row, int col, int rowInc, int colInc)
     {
-        if (dir.equals("left") && col > 2)
+        Character[] letters = new Character[]{'M', 'A', 'S'};
+        try
         {
-            return arr.get(row).charAt(col - 1) == 'M' && arr.get(row).charAt(col - 2) == 'A' && arr.get(row).charAt(col - 3) == 'S';
+            for (int i = 1; i < 4; i++)
+            {
+                if (arr.get(row + (rowInc * i)).charAt(col + (colInc * i)) != letters[i - 1])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
-        if (dir.equals("right") && col < arr.get(row).length() - 3)
+        catch (Exception e)
         {
-            return arr.get(row).charAt(col + 1) == 'M' && arr.get(row).charAt(col + 2) == 'A' && arr.get(row).charAt(col + 3) == 'S';
+            return false;
         }
-        if (dir.equals("up") && row > 2)
-        {
-            return arr.get(row - 1).charAt(col) == 'M' && arr.get(row - 2).charAt(col) == 'A' && arr.get(row - 3).charAt(col) == 'S';
-        }
-        if (dir.equals("down") && row < arr.size() - 3)
-        {
-            return arr.get(row + 1).charAt(col) == 'M' && arr.get(row + 2).charAt(col) == 'A' && arr.get(row + 3).charAt(col) == 'S';
-        }
-        return false;
     }
 
     public static ArrayList<String> getFileData(String fileName) {
