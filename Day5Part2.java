@@ -8,12 +8,12 @@ public class Day5Part2 {
     public static void main(String[] args) {
 
         ArrayList<String> fileData = getFileData("src/Day5Input.txt");
-        ArrayList<Integer> first = new ArrayList<>();
-        ArrayList<Integer> second = new ArrayList<>();
-        ArrayList<Integer[]> tests = new ArrayList<>();
-        ArrayList<Integer[]> wrong = new ArrayList<>();
-        int ans = 0;
-        for (int i = 0; i < fileData.size(); i++)
+        ArrayList<Integer> first = new ArrayList<>(); // the numbers in the first rule
+        ArrayList<Integer> second = new ArrayList<>(); // the numbers in the second rule
+        ArrayList<Integer[]> tests = new ArrayList<>(); // all the test cases
+        ArrayList<Integer[]> wrong = new ArrayList<>(); // all the incorrect cases
+        int ans = 0; // all middle numbers of wrong cases
+        for (int i = 0; i < fileData.size(); i++) // makes the arrays except wrong: WORKS FINE
         {
             if (fileData.get(i).contains("|"))
             {
@@ -44,13 +44,31 @@ public class Day5Part2 {
                 }
             }
         }
-        for (int k = 0; k < tests.size(); k++)// +1 to count whenever on the left side.
+        for (int k = 0; k < wrong.size(); k++)
         {
             int[] a = new int[first.size()];
-            for (int l = 0; l < tests.get(k).length; l++)
+            ArrayList<Integer> fixed = new ArrayList<>();
+            for (int l = 0; l < wrong.get(k).length; l++)
             {
-                int count = 0;
+                int idx = 0;
+                for (int m = 0; m < first.size(); m++)
+                {
+                    if (first.get(m) == wrong.get(k)[l] && Arrays.asList(wrong.get(k)).contains(first.get(m)) &&
+                            Arrays.asList(wrong.get(k)).contains(second.get(m)))
+                    {
+                        idx++;
+                    }
+                }
+                a[idx] = wrong.get(k)[l];
             }
+            for (int n : a)
+            {
+                if (n != 0)
+                {
+                    fixed.add(n);
+                }
+            }
+            ans += fixed.get((fixed.size() - 1) / 2);
         }
         System.out.println(ans);
     }
