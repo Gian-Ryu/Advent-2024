@@ -32,14 +32,14 @@ public class Day5Part1 {
         System.out.print(first + " | ");
         System.out.print(second + " | ");
         System.out.println(tests);
-        boolean works = true;
         for (int k = 0; k < tests.size(); k++)
         {
+            boolean works = true;
             for (int l = 0; l < first.size(); l++)
             {
                 if (Arrays.asList(tests.get(k)).contains(first.get(l)) && Arrays.asList(tests.get(k)).contains(second.get(l)))
                 {
-                    System.out.print(true + " | ");
+                    System.out.print(true + " | " + first.get(l) + " | " + second.get(l) + " | ");
                     if (Arrays.asList(tests.get(k)).indexOf(first.get(l)) > Arrays.asList(tests.get(k)).indexOf(second.get(l)))
                     {
                         System.out.println(false);
