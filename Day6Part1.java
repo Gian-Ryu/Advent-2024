@@ -10,7 +10,6 @@ public class Day6Part1 {
         System.out.println(fileData);
         int[] pos = new int[0];
         String dir = "up";
-        boolean end = false;
         String nextSpace = "";
         ArrayList<String> spaces = new ArrayList<>();
         Character[][] map = new Character[fileData.size()][fileData.get(0).length()];
@@ -25,66 +24,85 @@ public class Day6Part1 {
                 }
             }
         }
+        System.out.println(pos[0] + ", " + pos[1]);
         spaces.add(pos[0] + "," + pos[1]);
-        while (!end)
+        while (true)
         {
-            switch(dir)
-            {
-                case "up":
-                    nextSpace = (pos[0] + 1) + "," + pos[1] + "," + map[pos[0]][pos[1]];
-                    break;
-                case "down":
-                    nextSpace = (pos[0] - 1) + "," + pos[1] + "," + map[pos[0]][pos[1]];
-                    break;
-                case "right":
-                    nextSpace = pos[0] + "," + (pos[1] + 1) + "," + fileData.get(pos[0]).charAt(pos[1] + 1);
-                    break;
-                case "left":
-                    nextSpace = pos[0] + "," + (pos[1] - 1) + "," + fileData.get(pos[0]).charAt(pos[1] - 1);
-                    break;
-            }
-            while (nextSpace.split(",")[2].equals("#"))
+            try
             {
                 switch(dir)
                 {
                     case "up":
-                        dir = "right";
-                        nextSpace = (pos[0] + 1) + "," + pos[1] + "," + fileData.get(pos[0] + 1).charAt(pos[1]);
+                        nextSpace = (pos[0] - 1) + "," + pos[1] + "," + map[pos[0] - 1][pos[1]];
                         break;
                     case "down":
-                        dir = "left";
-                        nextSpace = (pos[0] - 1) + "," + pos[1] + "," + fileData.get(pos[0] - 1).charAt(pos[1]);
+                        nextSpace = (pos[0] + 1) + "," + pos[1] + "," + map[pos[0] + 1][pos[1]];
                         break;
                     case "right":
-                        dir = "down";
-                        nextSpace = pos[0] + "," + (pos[1] + 1) + "," + fileData.get(pos[0]).charAt(pos[1] + 1);
+                        nextSpace = pos[0] + "," + (pos[1] + 1) + "," + map[pos[0]][pos[1] + 1];
                         break;
                     case "left":
-                        dir = "up";
-                        nextSpace = pos[0] + "," + (pos[1] - 1) + "," + fileData.get(pos[0]).charAt(pos[1] - 1);
+                        nextSpace = pos[0] + "," + (pos[1] - 1) + "," + map[pos[0]][pos[1] - 1];
                         break;
                 }
+                while (nextSpace.split(",")[2].equals("#"))
+                {
+                    switch(dir)
+                    {
+                        case "up":
+                            dir = "right";
+                            nextSpace = pos[0] + "," + (pos[1] + 1) + "," + map[pos[0]][pos[1] + 1];
+                            break;
+                        case "down":
+                            dir = "left";
+                            nextSpace = pos[0] + "," + (pos[1] - 1) + "," + map[pos[0]][pos[1] - 1];
+                            break;
+                        case "right":
+                            dir = "down";
+                            nextSpace = (pos[0] - 1) + "," + pos[1] + "," + map[pos[0] - 1][pos[1]];
+                            break;
+                        case "left":
+                            dir = "up";
+                            nextSpace = (pos[0] + 1) + "," + pos[1] + "," + map[pos[0] + 1][pos[1]];
+                            break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.out.println("breaking");
+                break;
+            }
+            /*for (int i = 0; i < map.length; i++)
+            {
+                for (int j = 0; j < map[0].length; j++)
+                {
+                    System.out.print(map[i][j]);
+                }
+                System.out.println();
+            } */
+            map[pos[0]][pos[1]] = 'X';
+            if (!spaces.contains(pos[0] + "," + pos[1]))
+            {
+                spaces.add(pos[0] + "," + pos[1]);
             }
             switch(dir)
             {
                 case "up":
-                    if (!spaces.contains(pos[0] + "," + pos[1]))
-                    {
-                        spaces.add(pos[0] + "," + pos[1]);
-                    }
-                    pos[0] += 1;
+                    pos[0] -= 1;
                     break;
                 case "down":
-                    nextSpace = (pos[0] - 1) + "," + pos[1] + "," + fileData.get(pos[0] - 1).charAt(pos[1]);
+                    pos[0] += 1;
                     break;
                 case "right":
-                    nextSpace = pos[0] + "," + (pos[1] + 1) + "," + fileData.get(pos[0]).charAt(pos[1] + 1);
+                    pos[1] += 1;
                     break;
                 case "left":
-                    nextSpace = pos[0] + "," + (pos[1] - 1) + "," + fileData.get(pos[0]).charAt(pos[1] - 1);
+                    pos[1] -= 1;
                     break;
             }
         }
+        System.out.println(spaces.size());
     }
 
     public static ArrayList<String> getFileData(String fileName) {
