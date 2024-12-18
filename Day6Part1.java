@@ -7,7 +7,6 @@ public class Day6Part1 {
     public static void main(String[] args) {
 
         ArrayList<String> fileData = getFileData("src/Day6Input.txt");
-        System.out.println(fileData);
         int[] pos = new int[0];
         String dir = "up";
         String nextSpace = "";
@@ -24,10 +23,11 @@ public class Day6Part1 {
                 }
             }
         }
-        System.out.println(pos[0] + ", " + pos[1]);
         spaces.add(pos[0] + "," + pos[1]);
+        //int x = 0;
         while (true)
         {
+            //System.out.print(pos[0] + ", " + pos[1] + " | ");
             try
             {
                 switch(dir)
@@ -45,6 +45,7 @@ public class Day6Part1 {
                         nextSpace = pos[0] + "," + (pos[1] - 1) + "," + map[pos[0]][pos[1] - 1];
                         break;
                 }
+                //System.out.print(nextSpace + " | ");
                 while (nextSpace.split(",")[2].equals("#"))
                 {
                     switch(dir)
@@ -59,28 +60,20 @@ public class Day6Part1 {
                             break;
                         case "right":
                             dir = "down";
-                            nextSpace = (pos[0] - 1) + "," + pos[1] + "," + map[pos[0] - 1][pos[1]];
+                            nextSpace = (pos[0] + 1) + "," + pos[1] + "," + map[pos[0] + 1][pos[1]];
                             break;
                         case "left":
                             dir = "up";
-                            nextSpace = (pos[0] + 1) + "," + pos[1] + "," + map[pos[0] + 1][pos[1]];
+                            nextSpace = (pos[0] - 1) + "," + pos[1] + "," + map[pos[0] - 1][pos[1]];
                             break;
                     }
+                    //System.out.print("new "  +nextSpace + " | ");
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.out.println("breaking");
                 break;
             }
-            /*for (int i = 0; i < map.length; i++)
-            {
-                for (int j = 0; j < map[0].length; j++)
-                {
-                    System.out.print(map[i][j]);
-                }
-                System.out.println();
-            } */
             map[pos[0]][pos[1]] = 'X';
             if (!spaces.contains(pos[0] + "," + pos[1]))
             {
@@ -101,8 +94,18 @@ public class Day6Part1 {
                     pos[1] -= 1;
                     break;
             }
+            //System.out.println(pos[0] + ", " + pos[1]);
+            //x++;
         }
-        System.out.println(spaces.size());
+        System.out.println(spaces.size() + 1);
+        /*for (int i = 0; i < map.length; i++)
+        {
+            for (int j = 0; j < map[0].length; j++)
+            {
+                System.out.print(map[i][j]);
+            }
+            System.out.println();
+        } */
     }
 
     public static ArrayList<String> getFileData(String fileName) {
